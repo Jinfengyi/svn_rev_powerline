@@ -3,7 +3,7 @@
 if exists('g:svn_rev_pwer_line_en')
   finish
 endif
-
+let g:svn_rev_pwer_line_en = 1
 function! GetSvnLastRev() abort
   let s:file_name = expand('%:p')
   let s:svnLastRev = "svn log -l 1 ".s:file_name." | head -n 2 | tail -n 1 |awk '{print $1}'"
