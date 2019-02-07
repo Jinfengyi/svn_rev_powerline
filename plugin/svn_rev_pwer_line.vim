@@ -38,6 +38,12 @@ function! AddSvnRevToDict()
   endif
 endfunction
 
+function! UpdateSvnDiff()
+    let s:svnrev = substitute(GetSvnLastRev(), '\n', "", "g")
+    let s:svndif = substitute(ChkSvnDiff(), '\n', "", "g")
+    let g:dic_svnrev[bufnr('%')]=s:svnrev.s:svndif
+endfunction
+
 function! MoveSvnRevToDict()
   if has_key(g:dic_svnrev,bufnr('%'))
     unlet g:dic_svnrev[bufnr('%')]
@@ -53,8 +59,15 @@ function! DispSvnRev()
     let g:airline#extensions#branch#empty_message = g:dic_svnrev[bufnr('%')]
   endif
 endfunction
+
+function! DispSvnRev()
+  if has_key(g:dic_svnrev,bufnr('%'))
+    let g:airline#extensions#branch#empty_message = g:dic_svnrev[bufnr('%')]
+  endif
+endfunction
 "com! UpdateSvnRev   call DispSvnRev()
 
 autocmd BufRead * call AddSvnRevToDict()
 autocmd BufRead,WinEnter * call DispSvnRev()
 autocmd QuitPre * call MoveSvnRevToDict()
+autocmd BufWritePost * call UpdateDisp()
