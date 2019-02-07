@@ -60,10 +60,9 @@ function! DispSvnRev()
   endif
 endfunction
 
-function! DispSvnRev()
-  if has_key(g:dic_svnrev,bufnr('%'))
-    let g:airline#extensions#branch#empty_message = g:dic_svnrev[bufnr('%')]
-  endif
+function! UpdateDisp()
+  call UpdateSvnDiff()
+  call DispSvnRev()
 endfunction
 "com! UpdateSvnRev   call DispSvnRev()
 
